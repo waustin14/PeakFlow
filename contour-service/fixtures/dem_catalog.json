@@ -1,0 +1,10 @@
+{
+  "datasets": [
+    {
+      "id": "sf-demo-dem",
+      "version": "2026.02",
+      "path": "sample_dem.tif",
+      "bounds": [-122.50, 37.70, -122.35, 37.83]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "aoi": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [-122.442041, 37.767996],
+        [-122.435933, 37.767996],
+        [-122.435933, 37.772595],
+        [-122.442041, 37.772595],
+        [-122.442041, 37.767996]
+      ]
+    ]
+  },
+  "interval_ft": 5,
+  "index_every": 5,
+  "buffer_ft": 300,
+  "min_zoom": 12,
+  "max_zoom": 17,
+  "format": "png",
+  "style": {
+    "line_px": 1,
+    "index_line_px": 2,
+    "opacity": 0.75,
+    "label_index": false
+  },
+  "smoothing": false
+}

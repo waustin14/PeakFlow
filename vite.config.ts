@@ -17,6 +17,11 @@ export default defineConfig({
         rewrite: (p) => p.replace(/^\/noaa-api/, ''),
         secure: false,
       },
+      '/contour-api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/contour-api/, ''),
+      },
     },
   },
 })
