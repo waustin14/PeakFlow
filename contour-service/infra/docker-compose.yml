@@ -1,0 +1,82 @@
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8080
+    env_file:
+      - ../.env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    volumes:
+      - ../fixtures:/app/fixtures:ro
+
+  worker:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    command: /app/worker/entrypoint.sh
+    env_file:
+      - ../.env
+    environment:
+      # GDAL VSICURL — tune for streaming remote COG tiles efficiently
+      CPL_VSIL_CURL_CACHE_SIZE: "200000000"   # 200 MB in-process tile cache
+      GDAL_HTTP_MULTIPLEX: "YES"              # HTTP/2 multiplexing
+      GDAL_HTTP_VERSION: "2"
+      GDAL_HTTP_MAX_RETRY: "3"
+      GDAL_HTTP_RETRY_DELAY: "2"
+      GDAL_DISABLE_READDIR_ON_OPEN: "EMPTY_DIR"
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    volumes:
+      - ../fixtures:/app/fixtures:ro
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: contour
+      POSTGRES_PASSWORD: contour
+      POSTGRES_DB: contour
+    ports:
+      - "5432:5432"
+    volumes:
+      - contour-pg:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - contour-minio:/data
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      sleep 3;
+      mc alias set local http://minio:9000 minio minio123;
+      mc mb -p local/contours || true;
+      exit 0;
+      "
+
+volumes:
+  contour-pg:
+  contour-minio:

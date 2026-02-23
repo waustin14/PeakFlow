@@ -1,7 +1,7 @@
 import type { Atlas14FrequencyEstimate } from '@/types/noaa'
 import type { ReturnPeriod } from '@/types/project'
 
-const TARGET_PERIODS: ReturnPeriod[] = [2, 5, 10, 25, 50, 100]
+const TARGET_PERIODS: ReturnPeriod[] = [1, 2, 5, 10, 25, 50, 100]
 
 // Column order in NOAA Atlas 14 JS response (ARI return periods)
 const ARI_COLUMNS = [1, 2, 5, 10, 25, 50, 100, 200, 500, 1000]

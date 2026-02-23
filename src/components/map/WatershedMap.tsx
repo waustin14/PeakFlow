@@ -4,6 +4,7 @@ import { useUIStore } from '@/store/useUIStore'
 import { useProjectStore } from '@/store/useProjectStore'
 import { DrawingControls } from './DrawingControls'
 import { PolygonLayer } from './PolygonLayer'
+import { ContourOverlay } from './ContourOverlay'
 import { computePolygonAreaAcres } from '@/lib/geo/polygonArea'
 import { computeCentroid } from '@/lib/geo/centroid'
 
@@ -116,6 +117,7 @@ export function WatershedMap() {
       >
         {watershed && watershed.path.length > 0 && <PolygonLayer path={watershed.path} />}
         {isDrawingMode && <DrawingControls onPolygonComplete={onPolygonComplete} />}
+        <ContourOverlay map={mapInstance} />
       </GoogleMap>
     </div>
   )

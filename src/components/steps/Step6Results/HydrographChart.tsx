@@ -4,6 +4,7 @@ import type { TR55Results } from '@/types/results'
 import type { ReturnPeriod } from '@/types/project'
 
 const PERIOD_COLORS: Record<ReturnPeriod, string> = {
+  1: '#94a3b8',
   2: '#22d3ee',
   5: '#34d399',
   10: '#fbbf24',
