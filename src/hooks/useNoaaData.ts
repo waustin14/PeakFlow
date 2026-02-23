@@ -3,7 +3,7 @@ import { useProjectStore } from '@/store/useProjectStore'
 import { fetchAtlas14 } from '@/lib/noaa/atlas14Client'
 import type { ReturnPeriod } from '@/types/project'
 
-const TARGET_PERIODS: ReturnPeriod[] = [2, 5, 10, 25, 50, 100]
+const TARGET_PERIODS: ReturnPeriod[] = [1, 2, 5, 10, 25, 50, 100]
 
 export function useNoaaData() {
   const watershed = useProjectStore((s) => s.watershed)

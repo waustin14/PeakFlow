@@ -1,4 +1,4 @@
-export type ReturnPeriod = 2 | 5 | 10 | 25 | 50 | 100
+export type ReturnPeriod = 1 | 2 | 5 | 10 | 25 | 50 | 100
 
 export type HydrologicSoilGroup = 'A' | 'B' | 'C' | 'D'
 

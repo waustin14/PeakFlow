@@ -5,7 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import type { ReturnPeriod } from '@/types/project'
 
-const AVAILABLE_PERIODS: ReturnPeriod[] = [2, 5, 10, 25, 50, 100]
+const AVAILABLE_PERIODS: ReturnPeriod[] = [1, 2, 5, 10, 25, 50, 100]
 
 export function Step1ProjectSetup() {
   const { meta, returnPeriods, setProjectName, setReturnPeriods } = useProjectStore()
