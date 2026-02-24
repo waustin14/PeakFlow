@@ -57,21 +57,21 @@ export function Step4LandUseSoils() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-white">Land Use & Soils</h2>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+        <h2 className="text-lg font-semibold text-foreground">Land Use & Soils</h2>
+        <p className="text-sm text-muted-foreground mt-1">
           Build the composite CN from land use / hydrologic soil group combinations.
         </p>
       </div>
 
       {/* Composite CN badge */}
       {compositeCN !== null && (
-        <Card className="bg-blue-900/30 border-blue-700">
+        <Card className="bg-primary/15 border-primary/50">
           <CardContent className="py-4 flex items-center justify-between">
             <div>
-              <p className="text-xs text-blue-300 uppercase tracking-wider mb-0.5">Composite CN</p>
-              <p className="text-3xl font-bold text-white tabular-nums">{compositeCN.toFixed(1)}</p>
+              <p className="text-xs text-primary/70 uppercase tracking-wider mb-0.5">Composite CN</p>
+              <p className="text-3xl font-bold text-foreground tabular-nums">{compositeCN.toFixed(1)}</p>
             </div>
-            <div className="text-right text-xs text-zinc-500 dark:text-zinc-400">
+            <div className="text-right text-xs text-muted-foreground">
               <div>{totalArea.toFixed(2)} ac defined</div>
               {watershedArea > 0 && (
                 <div className={Math.abs(totalArea - watershedArea) / watershedArea > 0.05 ? 'text-amber-400' : 'text-emerald-400'}>
@@ -84,9 +84,9 @@ export function Step4LandUseSoils() {
       )}
 
       {/* Add entry form */}
-      <Card className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+      <Card className="bg-card border-border">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base text-zinc-900 dark:text-white flex items-center gap-2">
+          <CardTitle className="text-base text-foreground flex items-center gap-2">
             Add Land Use
             <InfoTooltip content="TR-55 Table 2-2 CN values. Select land use type, hydrologic soil group (HSG), and area. Composite CN = Σ(CN·A) / ΣA." />
           </CardTitle>
@@ -94,48 +94,48 @@ export function Step4LandUseSoils() {
         <CardContent className="space-y-3">
           {/* Land use search */}
           <div className="space-y-1">
-            <Label className="text-zinc-600 dark:text-zinc-300 text-xs">Land Use Type</Label>
+            <Label className="text-muted-foreground text-xs">Land Use Type</Label>
             <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-zinc-400 dark:text-zinc-500" />
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground/60" />
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search land use…"
-                className="bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white pl-8"
+                className="bg-muted border-border text-foreground pl-8"
               />
             </div>
             {search && (
-              <div className="max-h-40 overflow-y-auto rounded-md border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900">
+              <div className="max-h-40 overflow-y-auto rounded-md border border-border bg-muted">
                 {filtered.slice(0, 20).map((entry) => (
                   <button
                     key={entry.code}
                     onClick={() => { setSelectedCode(entry.code); setSearch('') }}
-                    className="w-full text-left px-3 py-2 text-sm text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                    className="w-full text-left px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
                   >
                     {entry.label}
                   </button>
                 ))}
                 {filtered.length === 0 && (
-                  <p className="px-3 py-2 text-sm text-zinc-500">No results</p>
+                  <p className="px-3 py-2 text-sm text-muted-foreground">No results</p>
                 )}
               </div>
             )}
             {selectedEntry && (
-              <p className="text-xs text-blue-500 dark:text-blue-400 truncate">{selectedEntry.label}</p>
+              <p className="text-xs text-primary/80 truncate">{selectedEntry.label}</p>
             )}
           </div>
 
           {/* HSG selector */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <Label className="text-zinc-600 dark:text-zinc-300 text-xs">Hydrologic Soil Group</Label>
+              <Label className="text-muted-foreground text-xs">Hydrologic Soil Group</Label>
               <Select value={selectedHSG} onValueChange={(v) => setSelectedHSG(v as HydrologicSoilGroup)}>
-                <SelectTrigger className="bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white">
+                <SelectTrigger className="bg-muted border-border text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+                <SelectContent className="bg-card border-border">
                   {HSG_OPTIONS.map((hsg) => (
-                    <SelectItem key={hsg} value={hsg} className="text-zinc-700 dark:text-zinc-200 focus:bg-zinc-100 dark:focus:bg-zinc-700">
+                    <SelectItem key={hsg} value={hsg} className="text-foreground/80 focus:bg-accent">
                       HSG {hsg}
                     </SelectItem>
                   ))}
@@ -143,8 +143,8 @@ export function Step4LandUseSoils() {
               </Select>
             </div>
             <div className="space-y-1">
-              <Label className="text-zinc-600 dark:text-zinc-300 text-xs">CN</Label>
-              <div className="flex h-10 items-center rounded-md border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 px-3 text-zinc-900 dark:text-white font-semibold tabular-nums">
+              <Label className="text-muted-foreground text-xs">CN</Label>
+              <div className="flex h-10 items-center rounded-md border border-border bg-muted px-3 text-foreground font-semibold tabular-nums">
                 {selectedCN ?? '—'}
               </div>
             </div>
@@ -152,7 +152,7 @@ export function Step4LandUseSoils() {
 
           {/* Area input */}
           <div className="space-y-1">
-            <Label className="text-zinc-600 dark:text-zinc-300 text-xs">Area (acres)</Label>
+            <Label className="text-muted-foreground text-xs">Area (acres)</Label>
             <div className="flex gap-2">
               <Input
                 type="number"
@@ -161,13 +161,13 @@ export function Step4LandUseSoils() {
                 value={areaInput}
                 onChange={(e) => setAreaInput(e.target.value)}
                 placeholder="e.g., 50.0"
-                className="bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white"
+                className="bg-muted border-border text-foreground"
                 onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
               />
               <Button
                 onClick={handleAdd}
                 disabled={!selectedEntry || !selectedCN || !areaInput}
-                className="bg-blue-600 hover:bg-blue-700 shrink-0"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground shrink-0"
               >
                 <Plus className="h-4 w-4 mr-1" />
                 Add
@@ -180,7 +180,7 @@ export function Step4LandUseSoils() {
       {/* Entry table */}
       {landUseEntries.length > 0 && (
         <div className="space-y-2">
-          <h3 className="text-sm font-medium text-zinc-600 dark:text-zinc-300">Land Use Entries</h3>
+          <h3 className="text-sm font-medium text-muted-foreground">Land Use Entries</h3>
           <div className="space-y-2">
             {landUseEntries.map((entry) => (
               <LandUseRow
@@ -207,10 +207,10 @@ function LandUseRow({
   onRemove: () => void
 }) {
   return (
-    <div className="flex items-center gap-2 rounded-md border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 px-3 py-2">
+    <div className="flex items-center gap-2 rounded-md border border-border bg-muted px-3 py-2">
       <div className="flex-1 min-w-0">
-        <p className="text-xs text-zinc-900 dark:text-white font-medium truncate">{entry.label}</p>
-        <p className="text-xs text-zinc-500">HSG {entry.hsg} · CN {entry.cn}</p>
+        <p className="text-xs text-foreground font-medium truncate">{entry.label}</p>
+        <p className="text-xs text-muted-foreground">HSG {entry.hsg} · CN {entry.cn}</p>
       </div>
       <Input
         type="number"
@@ -221,10 +221,10 @@ function LandUseRow({
           const v = parseFloat(e.target.value)
           if (!isNaN(v) && v > 0) onAreaChange(v)
         }}
-        className="w-20 bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white text-xs h-8 tabular-nums"
+        className="w-20 bg-card border-border text-foreground text-xs h-8 tabular-nums"
       />
-      <span className="text-xs text-zinc-500">ac</span>
-      <button onClick={onRemove} className="text-zinc-400 dark:text-zinc-500 hover:text-red-500 dark:hover:text-red-400 transition-colors">
+      <span className="text-xs text-muted-foreground">ac</span>
+      <button onClick={onRemove} className="text-muted-foreground/60 hover:text-destructive transition-colors">
         <Trash2 className="h-4 w-4" />
       </button>
     </div>

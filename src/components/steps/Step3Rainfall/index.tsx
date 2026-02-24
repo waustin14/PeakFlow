@@ -29,20 +29,20 @@ export function Step3Rainfall() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-white">Rainfall Depths</h2>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+        <h2 className="text-lg font-semibold text-foreground">Rainfall Depths</h2>
+        <p className="text-sm text-muted-foreground mt-1">
           Fetch 24-hr design storm depths from NOAA Atlas 14 or enter manually.
         </p>
       </div>
 
       {/* NOAA Fetch */}
-      <Card className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+      <Card className="bg-card border-border">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base text-zinc-900 dark:text-white flex items-center gap-2">
+          <CardTitle className="text-base text-foreground flex items-center gap-2">
             NOAA Atlas 14
             <InfoTooltip content="Fetches 24-hour precipitation frequency estimates from NOAA HDSC for the watershed centroid location." />
           </CardTitle>
-          <CardDescription className="text-zinc-500 dark:text-zinc-400">
+          <CardDescription className="text-muted-foreground">
             {canFetch
               ? 'Watershed centroid detected — ready to fetch.'
               : 'Define a watershed on Step 2 to enable auto-fetch.'}
@@ -52,7 +52,7 @@ export function Step3Rainfall() {
           <Button
             onClick={fetchNoaa}
             disabled={!canFetch || noaaFetch.status === 'loading'}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
           >
             {noaaFetch.status === 'loading' ? (
               <LoadingSpinner size="sm" label="Fetching NOAA data…" />
@@ -82,23 +82,23 @@ export function Step3Rainfall() {
       </Card>
 
       {/* Storm type */}
-      <Card className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+      <Card className="bg-card border-border">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base text-zinc-900 dark:text-white flex items-center gap-2">
+          <CardTitle className="text-base text-foreground flex items-center gap-2">
             Storm Distribution Type
             <InfoTooltip content="SCS 24-hour rainfall distribution type. Type II is most common for central/eastern US. Affects unit peak discharge (qu)." />
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Select value={stormType} onValueChange={(v) => setStormType(v as StormType)}>
-            <SelectTrigger className="bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white">
+            <SelectTrigger className="bg-muted border-border text-foreground">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+            <SelectContent className="bg-card border-border">
               {STORM_TYPES.map((st) => (
-                <SelectItem key={st.value} value={st.value} className="text-zinc-700 dark:text-zinc-200 focus:bg-zinc-100 dark:focus:bg-zinc-700">
+                <SelectItem key={st.value} value={st.value} className="text-foreground/80 focus:bg-accent">
                   <span className="font-medium">{st.label}</span>
-                  <span className="text-zinc-500 dark:text-zinc-400 ml-2 text-xs">{st.region}</span>
+                  <span className="text-muted-foreground ml-2 text-xs">{st.region}</span>
                 </SelectItem>
               ))}
             </SelectContent>
@@ -107,9 +107,9 @@ export function Step3Rainfall() {
       </Card>
 
       {/* Depth table */}
-      <Card className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+      <Card className="bg-card border-border">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base text-zinc-900 dark:text-white flex items-center gap-2">
+          <CardTitle className="text-base text-foreground flex items-center gap-2">
             24-hr Rainfall Depths
             <InfoTooltip content="24-hour total precipitation depth (inches) for each return period. P is used directly in the TR-55 runoff equation Q = (P - Ia)² / (P - Ia + S)." />
           </CardTitle>
@@ -118,7 +118,7 @@ export function Step3Rainfall() {
           <div className="space-y-3">
             {(returnPeriods as ReturnPeriod[]).map((period) => (
               <div key={period} className="flex items-center gap-3">
-                <Label className="w-16 text-zinc-600 dark:text-zinc-300 shrink-0 text-sm">{period}-yr</Label>
+                <Label className="w-16 text-muted-foreground shrink-0 text-sm">{period}-yr</Label>
                 <Input
                   type="number"
                   min="0"
@@ -129,9 +129,9 @@ export function Step3Rainfall() {
                     if (!isNaN(val) && val >= 0) setRainfallDepth(period, val)
                   }}
                   placeholder="0.00"
-                  className="bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white w-28 tabular-nums"
+                  className="bg-muted border-border text-foreground w-28 tabular-nums"
                 />
-                <span className="text-xs text-zinc-500">inches</span>
+                <span className="text-xs text-muted-foreground">inches</span>
               </div>
             ))}
           </div>

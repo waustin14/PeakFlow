@@ -23,32 +23,32 @@ export function Step1ProjectSetup() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-white">Project Setup</h2>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Configure your project name and design return periods.</p>
+        <h2 className="text-lg font-semibold text-foreground">Project Setup</h2>
+        <p className="text-sm text-muted-foreground mt-1">Configure your project name and design return periods.</p>
       </div>
 
-      <Card className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+      <Card className="bg-card border-border">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base text-zinc-900 dark:text-white">Project Information</CardTitle>
+          <CardTitle className="text-base text-foreground">Project Information</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            <Label htmlFor="project-name" className="text-zinc-600 dark:text-zinc-300">Project Name</Label>
+            <Label htmlFor="project-name" className="text-muted-foreground">Project Name</Label>
             <Input
               id="project-name"
               value={meta.name}
               onChange={(e) => setProjectName(e.target.value)}
               placeholder="e.g., Riverside Subdivision – Basin A"
-              className="bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500"
+              className="bg-muted border-border text-foreground placeholder:text-muted-foreground/60"
             />
           </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+      <Card className="bg-card border-border">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base text-zinc-900 dark:text-white">Design Return Periods</CardTitle>
-          <CardDescription className="text-zinc-500 dark:text-zinc-400">
+          <CardTitle className="text-base text-foreground">Design Return Periods</CardTitle>
+          <CardDescription className="text-muted-foreground">
             Select the annual recurrence intervals to analyze. At least one required.
           </CardDescription>
         </CardHeader>
@@ -62,9 +62,9 @@ export function Step1ProjectSetup() {
                 <Checkbox
                   checked={returnPeriods.includes(period)}
                   onCheckedChange={() => togglePeriod(period)}
-                  className="border-zinc-400 dark:border-zinc-500"
+                  className="border-border"
                 />
-                <span className="text-sm text-zinc-600 dark:text-zinc-300 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">
+                <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                   {period}-yr
                 </span>
               </label>
@@ -73,7 +73,7 @@ export function Step1ProjectSetup() {
         </CardContent>
       </Card>
 
-      <div className="text-xs text-zinc-500 px-1">
+      <div className="text-xs text-muted-foreground px-1">
         Created: {new Date(meta.createdAt).toLocaleDateString()}
         {' · '}
         Modified: {new Date(meta.updatedAt).toLocaleDateString()}

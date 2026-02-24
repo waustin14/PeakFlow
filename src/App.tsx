@@ -6,7 +6,7 @@ function App() {
   const theme = useUIStore((s) => s.theme)
 
   return (
-    <div className={theme === 'dark' ? 'dark' : ''}>
+    <div className={`app-grain-texture${theme === 'dark' ? ' dark' : ''}`}>
       <TooltipProvider delayDuration={300}>
         <AppShell />
       </TooltipProvider>

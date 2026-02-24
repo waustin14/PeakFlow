@@ -92,22 +92,22 @@ export function Step5TimeOfConc() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-white">Time of Concentration</h2>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+        <h2 className="text-lg font-semibold text-foreground">Time of Concentration</h2>
+        <p className="text-sm text-muted-foreground mt-1">
           Define flow path segments. Drag to reorder. Tc = Σ travel times.
         </p>
       </div>
 
       {/* Tc summary */}
       {tcHours !== null && (
-        <Card className="bg-blue-900/30 border-blue-700">
+        <Card className="bg-primary/15 border-primary/50">
           <CardContent className="py-4 flex items-center gap-3">
-            <Clock className="h-5 w-5 text-blue-400 shrink-0" />
+            <Clock className="h-5 w-5 text-primary shrink-0" />
             <div>
-              <p className="text-xs text-blue-300 uppercase tracking-wider mb-0.5">Total Tc</p>
-              <p className="text-2xl font-bold text-white tabular-nums">
+              <p className="text-xs text-primary/70 uppercase tracking-wider mb-0.5">Total Tc</p>
+              <p className="text-2xl font-bold text-foreground tabular-nums">
                 {tcHours.toFixed(3)} hr
-                <span className="text-sm text-zinc-400 ml-2 font-normal">
+                <span className="text-sm text-muted-foreground/60 ml-2 font-normal">
                   ({(tcHours * 60).toFixed(1)} min)
                 </span>
               </p>
@@ -124,7 +124,7 @@ export function Step5TimeOfConc() {
             size="sm"
             variant="outline"
             onClick={() => handleAddSegment(t.value)}
-            className="border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:border-blue-500"
+            className="border-border text-muted-foreground hover:text-foreground hover:border-primary"
           >
             <Plus className="h-3.5 w-3.5 mr-1" />
             {t.label}
@@ -150,7 +150,7 @@ export function Step5TimeOfConc() {
       </DndContext>
 
       {flowSegments.length === 0 && (
-        <p className="text-xs text-zinc-500 text-center py-6">
+        <p className="text-xs text-muted-foreground text-center py-6">
           No flow segments yet. Add sheet flow, shallow concentrated, or channel segments above.
         </p>
       )}
@@ -179,19 +179,19 @@ function SortableSegmentCard({
   } catch { /* invalid inputs */ }
 
   return (
-    <div ref={setNodeRef} style={style} className="rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-zinc-200 dark:border-zinc-700">
-        <button {...attributes} {...listeners} className="cursor-grab text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300">
+    <div ref={setNodeRef} style={style} className="rounded-md border border-border bg-card">
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-border">
+        <button {...attributes} {...listeners} className="cursor-grab text-muted-foreground/60 hover:text-muted-foreground">
           <GripVertical className="h-4 w-4" />
         </button>
-        <span className="text-xs text-zinc-500 w-5">{index + 1}</span>
+        <span className="text-xs text-muted-foreground w-5">{index + 1}</span>
         <Input
           value={seg.label}
           onChange={(e) => onUpdate({ label: e.target.value } as Partial<FlowSegment>)}
-          className="flex-1 bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white text-sm h-7"
+          className="flex-1 bg-muted border-border text-foreground text-sm h-7"
         />
-        <span className="text-xs text-blue-400 tabular-nums whitespace-nowrap">{ttDisplay}</span>
-        <button onClick={onRemove} className="text-zinc-400 dark:text-zinc-500 hover:text-red-500 dark:hover:text-red-400">
+        <span className="text-xs text-primary tabular-nums whitespace-nowrap">{ttDisplay}</span>
+        <button onClick={onRemove} className="text-muted-foreground/60 hover:text-destructive">
           <Trash2 className="h-4 w-4" />
         </button>
       </div>
@@ -205,7 +205,7 @@ function SortableSegmentCard({
 function SegmentFields({ seg, onUpdate }: { seg: FlowSegment; onUpdate: (u: Partial<FlowSegment>) => void }) {
   const numField = (label: string, key: string, value: number, step = 1, unit = '') => (
     <div className="space-y-0.5">
-      <Label className="text-zinc-500 dark:text-zinc-400 text-xs">{label}</Label>
+      <Label className="text-muted-foreground text-xs">{label}</Label>
       <div className="flex items-center gap-1">
         <Input
           type="number"
@@ -215,9 +215,9 @@ function SegmentFields({ seg, onUpdate }: { seg: FlowSegment; onUpdate: (u: Part
             const v = parseFloat(e.target.value)
             if (!isNaN(v)) onUpdate({ [key]: v } as Partial<FlowSegment>)
           }}
-          className="bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white text-xs h-8 tabular-nums"
+          className="bg-muted border-border text-foreground text-xs h-8 tabular-nums"
         />
-        {unit && <span className="text-xs text-zinc-500 whitespace-nowrap">{unit}</span>}
+        {unit && <span className="text-xs text-muted-foreground whitespace-nowrap">{unit}</span>}
       </div>
     </div>
   )
@@ -235,17 +235,17 @@ function SegmentFields({ seg, onUpdate }: { seg: FlowSegment; onUpdate: (u: Part
         {commonFields}
         <div className="grid grid-cols-2 gap-2">
           <div className="space-y-0.5">
-            <Label className="text-zinc-500 dark:text-zinc-400 text-xs flex items-center gap-1">
+            <Label className="text-muted-foreground text-xs flex items-center gap-1">
               Manning's n
               <InfoTooltip content="Sheet flow Manning's n from TR-55 Table 3-1." />
             </Label>
             <Select value={String(seg.manningsN)} onValueChange={(v) => onUpdate({ manningsN: parseFloat(v) } as Partial<FlowSegment>)}>
-              <SelectTrigger className="bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white text-xs h-8">
+              <SelectTrigger className="bg-muted border-border text-foreground text-xs h-8">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+              <SelectContent className="bg-card border-border">
                 {Object.entries(SHEET_FLOW_MANNINGS_N).map(([k, v]) => (
-                  <SelectItem key={k} value={String(v.n)} className="text-zinc-700 dark:text-zinc-200 text-xs focus:bg-zinc-100 dark:focus:bg-zinc-700">
+                  <SelectItem key={k} value={String(v.n)} className="text-foreground/80 text-xs focus:bg-accent">
                     {v.n} – {v.label}
                   </SelectItem>
                 ))}
@@ -254,7 +254,7 @@ function SegmentFields({ seg, onUpdate }: { seg: FlowSegment; onUpdate: (u: Part
           </div>
           {numField('2-yr P (in)', 'p2InchRainfall', seg.p2InchRainfall, 0.1, 'in')}
         </div>
-        <p className="text-xs text-zinc-500">Length capped at 300 ft per TR-55</p>
+        <p className="text-xs text-muted-foreground">Length capped at 300 ft per TR-55</p>
       </div>
     )
   }
@@ -264,14 +264,14 @@ function SegmentFields({ seg, onUpdate }: { seg: FlowSegment; onUpdate: (u: Part
       <div className="space-y-2">
         {commonFields}
         <div className="space-y-0.5">
-          <Label className="text-zinc-500 dark:text-zinc-400 text-xs">Surface Type</Label>
+          <Label className="text-muted-foreground text-xs">Surface Type</Label>
           <Select value={seg.surfaceType} onValueChange={(v) => onUpdate({ surfaceType: v } as Partial<FlowSegment>)}>
-            <SelectTrigger className="bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white text-xs h-8">
+            <SelectTrigger className="bg-muted border-border text-foreground text-xs h-8">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
-              <SelectItem value="unpaved" className="text-zinc-700 dark:text-zinc-200 text-xs focus:bg-zinc-100 dark:focus:bg-zinc-700">Unpaved (k = 16.13)</SelectItem>
-              <SelectItem value="paved" className="text-zinc-700 dark:text-zinc-200 text-xs focus:bg-zinc-100 dark:focus:bg-zinc-700">Paved (k = 20.33)</SelectItem>
+            <SelectContent className="bg-card border-border">
+              <SelectItem value="unpaved" className="text-foreground/80 text-xs focus:bg-accent">Unpaved (k = 16.13)</SelectItem>
+              <SelectItem value="paved" className="text-foreground/80 text-xs focus:bg-accent">Paved (k = 20.33)</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -285,14 +285,14 @@ function SegmentFields({ seg, onUpdate }: { seg: FlowSegment; onUpdate: (u: Part
       {commonFields}
       <div className="grid grid-cols-2 gap-2">
         <div className="space-y-0.5">
-          <Label className="text-zinc-500 dark:text-zinc-400 text-xs">Manning's n</Label>
+          <Label className="text-muted-foreground text-xs">Manning's n</Label>
           <Select value={String(seg.manningsN)} onValueChange={(v) => onUpdate({ manningsN: parseFloat(v) } as Partial<FlowSegment>)}>
-            <SelectTrigger className="bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white text-xs h-8">
+            <SelectTrigger className="bg-muted border-border text-foreground text-xs h-8">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+            <SelectContent className="bg-card border-border">
               {Object.entries(CHANNEL_MANNINGS_N).map(([k, v]) => (
-                <SelectItem key={k} value={String(v.n)} className="text-zinc-700 dark:text-zinc-200 text-xs focus:bg-zinc-100 dark:focus:bg-zinc-700">
+                <SelectItem key={k} value={String(v.n)} className="text-foreground/80 text-xs focus:bg-accent">
                   {v.n} – {v.label}
                 </SelectItem>
               ))}

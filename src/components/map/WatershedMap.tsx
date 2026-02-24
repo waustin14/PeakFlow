@@ -65,13 +65,13 @@ export function WatershedMap() {
 
   if (!apiKey) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-zinc-900">
+      <div className="flex h-full w-full items-center justify-center bg-card">
         <div className="text-center max-w-sm px-6">
           <div className="text-4xl mb-3">🗺️</div>
-          <p className="text-sm font-semibold text-zinc-200 mb-1">Google Maps API key not configured</p>
-          <p className="text-xs text-zinc-500">
-            Add <code className="bg-zinc-800 px-1 rounded">VITE_GOOGLE_MAPS_API_KEY</code> to your{' '}
-            <code className="bg-zinc-800 px-1 rounded">.env</code> and restart. Manual area entry is available on Step 2.
+          <p className="text-sm font-semibold text-foreground mb-1">Google Maps API key not configured</p>
+          <p className="text-xs text-muted-foreground">
+            Add <code className="bg-muted px-1 rounded">VITE_GOOGLE_MAPS_API_KEY</code> to your{' '}
+            <code className="bg-muted px-1 rounded">.env</code> and restart. Manual area entry is available on Step 2.
           </p>
         </div>
       </div>
@@ -80,10 +80,10 @@ export function WatershedMap() {
 
   if (loadError) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-zinc-900 text-zinc-400">
+      <div className="flex h-full w-full items-center justify-center bg-card text-muted-foreground">
         <div className="text-center">
           <p className="text-sm font-medium">Map failed to load</p>
-          <p className="text-xs mt-1 text-zinc-500">{loadError.message}</p>
+          <p className="text-xs mt-1 text-muted-foreground">{loadError.message}</p>
         </div>
       </div>
     )
@@ -91,8 +91,8 @@ export function WatershedMap() {
 
   if (!isLoaded) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-zinc-900">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-zinc-700 border-t-blue-500" />
+      <div className="flex h-full w-full items-center justify-center bg-card">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" />
       </div>
     )
   }
