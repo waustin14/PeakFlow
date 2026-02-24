@@ -1,15 +1,22 @@
 import { Check, Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useUIStore, type Step } from '@/store/useUIStore'
-import { useProjectStore, selectIsStep1Complete, selectIsStep2Complete, selectIsStep3Complete, selectIsStep4Complete, selectIsStep5Complete } from '@/store/useProjectStore'
+import {
+  useProjectStore,
+  selectIsStep1Complete,
+  selectIsStep2Complete,
+  selectIsStep3Complete,
+  selectIsStep4Complete,
+  selectIsStep5Complete,
+} from '@/store/useProjectStore'
 
 const STEPS: { id: Step; label: string; description: string }[] = [
-  { id: 1, label: 'Project Setup', description: 'Name & return periods' },
-  { id: 2, label: 'Watershed', description: 'Area delineation' },
-  { id: 3, label: 'Rainfall', description: 'Design storm depths' },
-  { id: 4, label: 'Land Use & Soils', description: 'Composite CN' },
-  { id: 5, label: 'Time of Conc.', description: 'Flow path segments' },
-  { id: 6, label: 'Results', description: 'Peak discharge & storage' },
+  { id: 1, label: 'Project Setup',    description: 'Name & return periods' },
+  { id: 2, label: 'Watershed',        description: 'Area delineation'       },
+  { id: 3, label: 'Rainfall',         description: 'Design storm depths'    },
+  { id: 4, label: 'Land Use & Soils', description: 'Composite CN'           },
+  { id: 5, label: 'Time of Conc.',    description: 'Flow path segments'     },
+  { id: 6, label: 'Results',          description: 'Peak discharge & storage'},
 ]
 
 function useStepCompletion(): Record<Step, boolean> {
@@ -38,7 +45,7 @@ export function StepNav() {
   }
 
   return (
-    <nav className="flex flex-col gap-1 py-4">
+    <nav className="flex flex-col py-3 px-2 gap-0.5">
       {STEPS.map((step) => {
         const unlocked = isUnlocked(step.id)
         const complete = completions[step.id]
@@ -50,39 +57,61 @@ export function StepNav() {
             disabled={!unlocked}
             onClick={() => unlocked && setActiveStep(step.id)}
             className={cn(
-              'flex items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors',
+              'relative flex items-center gap-3 rounded-md px-3 py-2.5 text-left transition-all duration-150',
               active
-                ? 'bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-white'
+                ? 'bg-primary/10 text-foreground'
                 : unlocked
-                ? 'hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-300'
-                : 'opacity-40 cursor-not-allowed text-zinc-500'
+                ? 'hover:bg-accent/70 text-muted-foreground hover:text-foreground'
+                : 'opacity-35 cursor-not-allowed text-muted-foreground'
             )}
           >
-            {/* Step indicator */}
+            {/* Left-border active indicator */}
+            {active && (
+              <span className="absolute left-0 top-2 bottom-2 w-[3px] rounded-r-full bg-primary shadow-[0_0_6px_hsl(var(--primary)/0.5)]" />
+            )}
+
+            {/* Step badge */}
             <span
               className={cn(
-                'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
+                'flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full ring-1 transition-all duration-150',
                 complete
-                  ? 'bg-emerald-500 text-white'
+                  ? 'bg-primary ring-primary/50 shadow-sm'
                   : active
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-transparent ring-primary'
                   : unlocked
-                  ? 'bg-zinc-300 dark:bg-zinc-600 text-zinc-600 dark:text-zinc-300'
-                  : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-500'
+                  ? 'bg-transparent ring-border'
+                  : 'bg-transparent ring-border/50'
               )}
             >
               {complete ? (
-                <Check className="h-3.5 w-3.5" />
+                <Check className="h-3 w-3 text-primary-foreground" />
               ) : !unlocked ? (
-                <Lock className="h-3 w-3" />
+                <Lock className="h-2.5 w-2.5 text-muted-foreground" />
               ) : (
-                step.id
+                <span
+                  className={cn(
+                    'font-display text-[10px] font-bold leading-none',
+                    active ? 'text-primary' : 'text-muted-foreground'
+                  )}
+                >
+                  {step.id}
+                </span>
               )}
             </span>
 
+            {/* Label + description */}
             <span className="min-w-0 flex-1">
-              <span className="block text-sm font-medium truncate">{step.label}</span>
-              <span className="block text-xs text-zinc-500 truncate">{step.description}</span>
+              <span
+                className={cn(
+                  'block text-[13px] leading-tight truncate',
+                  active ? 'font-semibold text-foreground' : 'font-medium'
+                )}
+              >
+                {step.label}
+              </span>
+              <span className="block text-[10px] leading-tight text-muted-foreground truncate mt-0.5 tracking-wide">
+                {step.description}
+              </span>
             </span>
           </button>
         )
