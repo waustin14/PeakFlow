@@ -1,51 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    /* Survey-Grade Light: blue-tinted surfaces, crisp contrast */
+    --background: 210 28% 96%;
+    --foreground: 213 52% 11%;
+
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 213 52% 11%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.9% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.9% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.9% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 72.2% 50.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-    --radius: 0.5rem;
+    --popover-foreground: 213 52% 11%;
+
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 32% 91%;
+    --secondary-foreground: 213 52% 11%;
+
+    --muted: 210 22% 92%;
+    --muted-foreground: 215 22% 48%;
+
+    --accent: 210 30% 89%;
+    --accent-foreground: 213 52% 11%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 24% 84%;
+    --input: 210 24% 84%;
+    --ring: 174 68% 36%;
+
+    --radius: 0.375rem;
+
+    /* Sidebar gets a slightly cooler, darker surface */
+    --sidebar-bg: 213 30% 91%;
+    --sidebar-border: 213 24% 82%;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    /* Survey-Grade Dark: deep ocean-navy command center */
+    --background: 220 42% 8%;
+    --foreground: 210 26% 87%;
+
+    --card: 220 40% 11%;
+    --card-foreground: 210 26% 87%;
+
+    --popover: 220 40% 13%;
+    --popover-foreground: 210 26% 87%;
+
+    --primary: 217 91% 64%;
+    --primary-foreground: 220 42% 7%;
+
+    --secondary: 220 36% 16%;
+    --secondary-foreground: 210 26% 87%;
+
+    --muted: 220 36% 16%;
+    --muted-foreground: 215 22% 54%;
+
+    --accent: 220 36% 20%;
+    --accent-foreground: 210 26% 87%;
+
+    --destructive: 0 60% 42%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+
+    --border: 220 36% 18%;
+    --input: 220 36% 18%;
+    --ring: 174 62% 52%;
+
+    /* Sidebar is the deepest layer */
+    --sidebar-bg: 222 50% 6%;
+    --sidebar-border: 220 40% 13%;
   }
 }
 
@@ -53,34 +82,93 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-family: 'DM Sans', system-ui, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Chakra Petch for structural chrome: titles, step labels, section headers */
+  .font-display,
+  [data-display] {
+    font-family: 'Chakra Petch', system-ui, sans-serif;
+  }
+
+  /* Space Mono for all engineering data values */
+  .font-data,
+  [data-numeric] {
+    font-family: 'Space Mono', 'Courier New', monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
   }
 }
 
-/* Scrollbar */
+/* ─── Scrollbar ─────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
+
 ::-webkit-scrollbar-track {
-  background: hsl(240 4.9% 93%);
+  background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: hsl(240 3.7% 70%);
-  border-radius: 3px;
+  background: hsl(210 22% 74%);
+  border-radius: 2px;
+  transition: background 0.2s;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(240 3.7% 55%);
+  background: hsl(221 60% 52%);
 }
-.dark ::-webkit-scrollbar-track {
-  background: hsl(240 10% 3.9%);
-}
+
 .dark ::-webkit-scrollbar-thumb {
-  background: hsl(240 3.7% 25%);
-  border-radius: 3px;
+  background: hsl(220 36% 24%);
 }
+
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: hsl(240 3.7% 35%);
+  background: hsl(217 70% 56%);
+}
+
+/* ─── Step panel progress bar animation ─────────────────────── */
+@keyframes step-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.step-active-dot {
+  animation: step-pulse 2s ease-in-out infinite;
+}
+
+/* ─── Sidebar grid pattern overlay ──────────────────────────── */
+.sidebar-grid-pattern {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dark .sidebar-grid-pattern {
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* ─── Card hover lift ────────────────────────────────────────── */
+.card-lift {
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dark .card-lift:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
