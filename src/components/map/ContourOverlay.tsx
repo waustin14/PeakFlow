@@ -13,6 +13,7 @@ export function ContourOverlay({ map }: ContourOverlayProps) {
   const contourJobId = useUIStore((s) => s.contourJobId)
   const contourStatus = useUIStore((s) => s.contourStatus)
   const contourVisible = useUIStore((s) => s.contourVisible)
+  const theme = useUIStore((s) => s.theme)
 
   const overlayRef = useRef<google.maps.ImageMapType | null>(null)
 
@@ -45,6 +46,29 @@ export function ContourOverlay({ map }: ContourOverlayProps) {
     overlayRef.current = overlay
     map.overlayMapTypes.push(overlay)
   }, [map, contourJobId, contourStatus, contourVisible])
+
+  // Apply CSS filter to contour tile images for dark mode visibility.
+  // Contour tiles have dark lines on a transparent background, which become
+  // invisible against the dark base map. invert(1) flips them to light lines.
+  useEffect(() => {
+    if (!map) return
+
+    const isDark = theme === 'dark'
+
+    const applyFilter = () => {
+      const mapDiv = map.getDiv()
+      if (!mapDiv) return
+      mapDiv
+        .querySelectorAll<HTMLImageElement>('img[src*="/contour-api/"]')
+        .forEach((img) => {
+          img.style.filter = isDark ? 'invert(1) brightness(1.2)' : ''
+        })
+    }
+
+    applyFilter()
+    const listener = map.addListener('tilesloaded', applyFilter)
+    return () => google.maps.event.removeListener(listener)
+  }, [map, theme, contourJobId, contourStatus, contourVisible])
 
   // Clean up on unmount
   useEffect(() => {
