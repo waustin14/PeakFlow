@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from api.db import Base, engine
 from api.routes.contours import router as contour_router
+from api.routes.dxf import router as dxf_router
 
 app = FastAPI(title='Contour Service', version='0.1.0')
 
@@ -16,3 +17,4 @@ def healthz() -> dict[str, str]:
 
 
 app.include_router(contour_router)
+app.include_router(dxf_router)

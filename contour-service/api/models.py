@@ -37,3 +37,37 @@ class ContourJob(Base):
     last_accessed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     cached_hit: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+
+
+class DxfExportJob(Base):
+    __tablename__ = 'dxf_export_jobs'
+    __table_args__ = (UniqueConstraint('job_id', name='uq_dxf_job_id'),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    job_id: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    tenant_id: Mapped[str] = mapped_column(String(128), nullable=False, index=True)
+    status: Mapped[str] = mapped_column(String(16), nullable=False, index=True)
+    progress: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+
+    request_signature: Mapped[str] = mapped_column(Text, nullable=False)
+    request_payload: Mapped[str] = mapped_column(Text, nullable=False)
+
+    dem_dataset_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    dem_dataset_version: Mapped[str] = mapped_column(String(64), nullable=False)
+    projected_crs: Mapped[str] = mapped_column(String(64), default='')
+    bounds_wgs84: Mapped[str] = mapped_column(Text, default='')
+
+    source_geojson_key: Mapped[str] = mapped_column(Text, default='')
+    dxf_s3_key: Mapped[str] = mapped_column(Text, default='')
+
+    error_message: Mapped[str] = mapped_column(Text, default='')
+    worker_task_id: Mapped[str] = mapped_column(String(128), default='')
+
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow, nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_accessed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+    cached_hit: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)

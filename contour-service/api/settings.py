@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     job_rate_limit_per_hour: int = Field(default=30, alias='CONTOUR_JOB_RATE_LIMIT_PER_HOUR')
     max_concurrent_per_tenant: int = Field(default=2, alias='CONTOUR_MAX_CONCURRENT_PER_TENANT')
     max_zoom: int = Field(default=18, alias='CONTOUR_MAX_ZOOM')
+    geojson_ttl_hours: int = Field(default=24, alias='CONTOUR_GEOJSON_TTL_HOURS')
 
     @property
     def api_key_set(self) -> set[str]:
@@ -36,6 +37,5 @@ class Settings(BaseSettings):
 
 
 @lru_cache
-
 def get_settings() -> Settings:
     return Settings()  # type: ignore[arg-type]
