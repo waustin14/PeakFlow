@@ -22,7 +22,7 @@ export function ContourOverlay({ map }: ContourOverlayProps) {
     // Remove any existing overlay first
     const removeOverlay = () => {
       if (overlayRef.current) {
-        const idx = map.overlayMapTypes.indexOf(overlayRef.current)
+        const idx = map.overlayMapTypes.getArray().indexOf(overlayRef.current)
         if (idx !== -1) map.overlayMapTypes.removeAt(idx)
         overlayRef.current = null
       }
@@ -50,7 +50,7 @@ export function ContourOverlay({ map }: ContourOverlayProps) {
   useEffect(() => {
     return () => {
       if (map && overlayRef.current) {
-        const idx = map.overlayMapTypes.indexOf(overlayRef.current)
+        const idx = map.overlayMapTypes.getArray().indexOf(overlayRef.current)
         if (idx !== -1) map.overlayMapTypes.removeAt(idx)
       }
     }
